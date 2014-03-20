@@ -113,7 +113,7 @@
                         $mygroup += '<img src="' + group[$i].mugshot_url + '">' + " " + group[$i].full_name + "," + "<br>";
 
                     }
-                    $("#yammer-group-button").html($mygroup);
+                    $("#current-groups").html($mygroup);
                 },
 
                 error: function (group) {
@@ -186,8 +186,65 @@
             <pre id="authResult"></pre>
         </div>
     </div>
+    <pre><code>yam.platform.getLoginStatus(callback, [forceRefresh])
+</code></pre>
+
+    <p>Determines whether the current user is logged in to Yammer and connected to your application. The first time the method is called, it will query the Yammer API and when this responds <code>callback</code> will be invoked with the server response as
+        the only argument. Calling the method subsequently will return the cached response unless <code>forceRefresh</code> is set to <code>true</code>.</p>
+
+    <p>Subsequent calls to <code>yam.platform.request</code> will automatically use the token returned by this call.</p>
+
+    <p>This method calls the endpoint <a href="https://www.yammer.com/oauth2/access_token.json">https://www.yammer.com/oauth2/access_token.json</a>
+        There is an equivalent endpoint under api.yammer.com, but that only yields 403 responses presumably because the <code>_workfeed_session_id</code> cookie used to determine logged in status is set against <a href="http://www.yammer.com">www.yammer.com</a> and
+        not api.yammer.com.</p>
+
+    <h2>
+<a name="setauthtoken" class="anchor" href="#setauthtoken"><span class="mini-icon mini-icon-link"></span></a>setAuthToken</h2>
+
+    <pre><code>yam.platform.setAuthToken(token, [callback])
+</code></pre>
+
+    <p>Sets a specific auth token string which may have been stored locally or which has been retrieved through the <code>/api/v1/oauth/tokens.json</code> endpoint for example. This token will be used blindly for subsequent <code>yam.platform.request</code> calls.
+        <br>Alternatively if a callback is provided the token will be checked for validity against the API. If the token is not valid the user will be effectively left in a logged out state.</p>
+
+    <p>This method calls the endpoint <a href="https://api.yammer.com/api/v1/oauth2/token.json">https://api.yammer.com/api/v1/oauth2/token.json</a>
+    </p>
+
+    <h2>
+<a name="login" class="anchor" href="#login"><span class="mini-icon mini-icon-link"></span></a>login</h2>
+
+    <pre><code>yam.platform.login([opts], [callback])
+</code></pre>
+
+    <p>Triggers a login dialog popup. When the login flow is completed the <code>callback</code>
+        will be invoked with the access token as the only argument.</p>
+
+    <p>The dialog is located at <a href="https://www.yammer.com/dialog/oauth">https://www.yammer.com/dialog/oauth</a>.
+        <br>If <code>opts.loginType</code> == <code>session</code> the dialog used is
+        <a href="https://www.yammer.com/dialog/weblogin">https://www.yammer.com/dialog/weblogin</a>, although it's unclear if this is used.</p>
+
+    <h2>
+<a name="logout" class="anchor" href="#logout"><span class="mini-icon mini-icon-link"></span></a>logout</h2>
+
+    <pre><code>yam.platform.logout([callback])
+</code></pre>
+
+    <p>Logs the user out based on their current bearer token. The <code>callback</code> will be invoked with a single boolean argument to indicate whether logout succeeded or failed.
+    </p>
+
+    <h2>
+<a name="request" class="anchor" href="#request"><span class="mini-icon mini-icon-link"></span></a>request</h2>
+
+    <pre><code>yam.platform.request(options)
+</code></pre>
+
+    <p>Makes requests to the Yammer API using the bearer token provided through
+        <code>yam.platform.setAuthToken</code>, retrieved for the users current session via
+        <code>yam.platform.getLoginStatus</code> or returned by the login flow triggered by
+        <code>yam.platform.login</code>. The <code>options</code> argument mirrors jQuery Ajax, with the addition that if <code>url</code> is relative it will be automatically qualified to the API domain.</p>
     <div id="embedded-follow"></div>
     <div id="embedded-like"></div>
+    <div id="current-groups"></div>
     <div id="embedded-feed" style="height:400px;width:500px;"></div>
     <script>
         yam.connect.embedFeed({
@@ -217,7 +274,7 @@
             action: "like"
         });
     </script>
-<a href="/auth.html">Link to page with setAuthToken</a>
+    <a href="/auth.html">Link to page with setAuthToken</a>
 </body>
 
 </html>
