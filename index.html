@@ -113,7 +113,7 @@
     $mygroup += '<img src="'+ group[$i].mugshot_url +'">' + " " + group[$i].full_name + ","+ "<br>";
 
     }
-    $("#user-groups").html($mygroup);
+    $("#yammer-group-button").html($mygroup);
     },
 
     error: function (group) {
@@ -162,7 +162,8 @@
 
             $('#disconnect').click(logout);
             $('#yammer-js-login-button').click(login);
-            $('#yammer-user-button').click(getCurrentGroups);
+            $('#yammer-user-button').click(getCurrentUser);
+            $('#yammer-group-button').click(getCurrentGroups);
 
         });
     </script>
@@ -171,6 +172,7 @@
             <h2>JS SDK</h2>
             <button id="yammer-js-login-button">JS Login</button>
             <button id="yammer-user-button">Get Current User</button>
+            <button id="yammer-group-button">Get Current Groups</button>
 
         </div>
 
