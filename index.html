@@ -129,6 +129,7 @@
                     if (response.authResponse) {
                         console.log("Logged in");
                         displayAuthResult(response.access_token);
+                        localStorage.setItem(1, JSON.stringify(response.access_token.token).replace(/"/g, ""));
                     } else {
                         console.log("Not logged in.  Going to login now.");
                         yam.login(function (response) { //prompt user to login and authorize your app, as necessary
