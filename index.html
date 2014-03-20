@@ -1,50 +1,103 @@
 <!doctype html>
 <html>
-  <head>
+
+<head>
     <title>Yammer Action Buttons</title>
     <meta property="og:url" content="" />
     <!--<script src="yambuttonsplugin/assets/jquery-1.9.1.min.js"></script> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- <script data-app-id="gzXxrSg5hswZjN0WljUiQ" src="https://assets.yammer.com/assets/platform_embed.js"></script> -->
     <script data-app-id="kW8GTCFsG64mmk1HYUtA" src="https://assets.staging.yammer.com/assets/platform_js_sdk.js"></script>
-      <!--<script data-app-id="Ytw9qGxPbFXGJpFJ6g0i4w" src="https://assets.yammer.com/platform/yam.js"></script>-->
-  </head>
-  <body>
-      <div>
-          <!--<div id="login" style="width:200px;height:100px;"></div>-->
-          <!--<div id="yammer-like" style="width:200px;height:100px;"></div>
+    <!--<script data-app-id="Ytw9qGxPbFXGJpFJ6g0i4w" src="https://assets.yammer.com/platform/yam.js"></script>-->
+</head>
+
+<body>
+    <div>
+        <!--<div id="login" style="width:200px;height:100px;"></div>-->
+        <!--<div id="yammer-like" style="width:200px;height:100px;"></div>
           <div id="yammer-follow" style="width:200px;height:100px;"></div>-->
-      <script type="text/javascript" src="https://assets.staging.yammer.com/assets/platform_embed.js"></script>
-      <div id="embedded-follow"></div>
-      <div id="embedded-like"></div>
-      <div id="embedded-feed" style="height:400px;width:500px;"></div>
-          <script>
-              yam.connect.embedFeed({
-                container: '#embedded-feed'
-                      , feedType: 'open-graph'
-                      , feedId: ''
-                      , config: {
-                           use_sso: false
-                           , header: true
-                           , footer: true
-                           , showOpenGraphPreview: false
+        <script type="text/javascript" src="https://assets.staging.yammer.com/assets/platform_embed.js"></script>
+        <button id="yammer-js-login-button">JS Login</button>
+        <button id="yammer-user-button">Get Current User</button>
+        <div id="embedded-follow"></div>
+        <div id="embedded-like"></div>
+        <div id="embedded-feed" style="height:400px;width:500px;"></div>
+        <script>
+            yam.connect.embedFeed({
+                container: '#embedded-feed',
+                feedType: 'open-graph',
+                feedId: '',
+                config: {
+                    use_sso: false,
+                    header: true,
+                    footer: true,
+                    showOpenGraphPreview: false
 
-                      }
-                      , objectProperties: {
-                        url: ''
-                        , type: 'page'
-                      }
-                  });
+                },
+                objectProperties: {
+                    url: '',
+                    type: 'page'
+                }
+            });
 
-              yam.connect.actionButton({
-               container: "#embedded-follow",
-               action: "follow"
-              });
+            yam.connect.actionButton({
+                container: "#embedded-follow",
+                action: "follow"
+            });
 
-              yam.connect.actionButton({
-               container: "#embedded-like",
-               action: "like"
-              });
-          </script>
-      </div>
-  </body>
+            yam.connect.actionButton({
+                container: "#embedded-like",
+                action: "like"
+            });
+
+            function login() {
+                console.log("Trigger LoginStatus");
+                yam.getLoginStatus(
+                    function (response) {
+                        if (response.authResponse) {
+                            console.log("Logged in");
+                            displayAuthResult(response.access_token);
+                        } else {
+                            console.log("Not logged in.  Going to login now.");
+                            yam.login(function (response) { //prompt user to login and authorize your app, as necessary
+                                if (response.authResponse) {
+                                    displayAuthResult(response.access_token);
+                                    localStorage.setItem(1, JSON.stringify(response.access_token.token).replace(/"/g, ""));
+                                }
+                            });
+                        }
+                    }
+                );
+
+            }
+
+
+            function getCurrentUser() {
+                yam.platform.request({
+                    url: "users/current.json", //this is one of many REST endpoints that are available
+                    method: "GET",
+                    data: {},
+                    success: function (user) { //print message response information to the console
+                        console.log("User request was successful.");
+                        console.dir(user);
+                        toggleLoginStatus(true);
+                        $('#authResult').html('User Result:<br/>');
+                        for (var field in user) {
+                            $('#authResult').append(' ' + field + ': ' +
+                                escape(user[field]) + '<br/>');
+                        }
+
+                    },
+                    error: function (user) {
+                        console.error("There was an error with the request.");
+                    }
+                });
+
+            }
+            $('#yammer-js-login-button').click(login);
+            $('#yammer-user-button').click(getCurrentUser);
+        </script>
+    </div>
+</body>
+
 </html>
