@@ -132,7 +132,6 @@
                     if (response.authResponse) {
                         console.log("Logged in and got code");
                         displayAuthResult(response.access_token);
-                        getCurrentGroups();
                     } else {
                         console.log("Not logged in.");
 
