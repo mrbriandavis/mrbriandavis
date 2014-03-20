@@ -167,7 +167,16 @@
             <button id="yammer-group-button">Get Current Groups</button>
 
         </div>
+        <a name="setauthtoken" class="anchor" href="#setauthtoken"><span class="mini-icon mini-icon-link"></span></a>setAuthToken</h2>
 
+        <pre><code>yam.platform.setAuthToken(token, [callback])
+</code></pre>
+
+        <p>Sets a specific auth token string which may have been stored locally or which has been retrieved through the <code>/api/v1/oauth/tokens.json</code> endpoint for example. This token will be used blindly for subsequent <code>yam.platform.request</code> calls.
+            <br>Alternatively if a callback is provided the token will be checked for validity against the API. If the token is not valid the user will be effectively left in a logged out state.</p>
+
+        <p>This method calls the endpoint <a href="https://api.yammer.com/api/v1/oauth2/token.json">https://api.yammer.com/api/v1/oauth2/token.json</a>
+        </p>
         <div class="logged-in" style="display:none">
             <p>User is now signed in to the app using Yammer</p>
             <button id="disconnect" class="yj-btn yj-btn-alt">Log out from your Yammer account</button>
