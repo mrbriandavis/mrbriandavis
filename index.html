@@ -1,1 +1,50 @@
-Hello World! 
+<!doctype html>
+<html>
+  <head>
+    <title>Yammer Action Buttons</title>
+    <meta property="og:url" content="" />
+    <!--<script src="yambuttonsplugin/assets/jquery-1.9.1.min.js"></script> -->
+    <!-- <script data-app-id="gzXxrSg5hswZjN0WljUiQ" src="https://assets.yammer.com/assets/platform_embed.js"></script> -->
+    <script data-app-id="kW8GTCFsG64mmk1HYUtA" src="https://assets.staging.yammer.com/assets/platform_js_sdk.js"></script>
+      <!--<script data-app-id="Ytw9qGxPbFXGJpFJ6g0i4w" src="https://assets.yammer.com/platform/yam.js"></script>-->
+  </head>
+  <body>
+      <div>
+          <!--<div id="login" style="width:200px;height:100px;"></div>-->
+          <!--<div id="yammer-like" style="width:200px;height:100px;"></div>
+          <div id="yammer-follow" style="width:200px;height:100px;"></div>-->
+      <script type="text/javascript" src="https://assets.staging.yammer.com/assets/platform_embed.js"></script>
+      <div id="embedded-follow"></div>
+      <div id="embedded-like"></div>
+      <div id="embedded-feed" style="height:400px;width:500px;"></div>
+          <script>
+              yam.connect.embedFeed({
+                container: '#embedded-feed'
+                      , feedType: 'open-graph'
+                      , feedId: ''
+                      , config: {
+                           use_sso: false
+                           , header: true
+                           , footer: true
+                           , showOpenGraphPreview: false
+
+                      }
+                      , objectProperties: {
+                        url: ''
+                        , type: 'page'
+                      }
+                  });
+
+              yam.connect.actionButton({
+               container: "#embedded-follow",
+               action: "follow"
+              });
+
+              yam.connect.actionButton({
+               container: "#embedded-like",
+               action: "like"
+              });
+          </script>
+      </div>
+  </body>
+</html>
