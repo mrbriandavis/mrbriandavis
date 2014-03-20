@@ -102,25 +102,25 @@
         }
 
         function getCurrentGroups() {
-        yam.platform.request({
-        // yam.request({
-        url: "groups.json?mine=1",
-        method: "GET",
-    data: { },
-    success: function (group) {
-    $mygroup = "";
-    for ($i = 0; $i < group.length; $i++) {
-    $mygroup += '<img src="'+ group[$i].mugshot_url +'">' + " " + group[$i].full_name + ","+ "<br>";
+            yam.platform.request({
+                // yam.request({
+                url: "groups.json?mine=1",
+                method: "GET",
+                data: {},
+                success: function (group) {
+                    $mygroup = "";
+                    for ($i = 0; $i < group.length; $i++) {
+                        $mygroup += '<img src="' + group[$i].mugshot_url + '">' + " " + group[$i].full_name + "," + "<br>";
 
-    }
-    $("#yammer-group-button").html($mygroup);
-    },
+                    }
+                    $("#yammer-group-button").html($mygroup);
+                },
 
-    error: function (group) {
-    console.error("There was an error with the request.");
-    }
-    });
-    }
+                error: function (group) {
+                    console.error("There was an error with the request.");
+                }
+            });
+        }
 
         function login() {
             console.log("Trigger LoginStatus");
