@@ -191,7 +191,37 @@
       <pre id="authResult"></pre>
     </div>
 </div>
+ <div id="embedded-follow"></div>
+      <div id="embedded-like"></div>
+      <div id="embedded-feed" style="height:400px;width:500px;"></div>
+          <script>
+              yam.connect.embedFeed({
+                container: '#embedded-feed'
+                      , feedType: 'open-graph'
+                      , feedId: ''
+                      , config: {
+                           use_sso: false
+                           , header: true
+                           , footer: true
+                           , showOpenGraphPreview: false
 
+                      }
+                      , objectProperties: {
+                        url: ''
+                        , type: 'page'
+                      }
+                  });
+
+              yam.connect.actionButton({
+               container: "#embedded-follow",
+               action: "follow"
+              });
+
+              yam.connect.actionButton({
+               container: "#embedded-like",
+               action: "like"
+              });
+          </script>
 
   </body>
 </html>
