@@ -150,23 +150,9 @@
                 console.error = function () {};
             }
 
-            $('#disconnect').click(logout);
             $('#yammer-js-login-button').click(login);
             $('#yammer-user-button').click(getCurrentUser);
 
-            yam.connect.loginButton(
-                // You can specify a network here:
-                // {selector: "#yammer-login", network: "example.com"}
-                {
-                    selector: "#yammer-login"
-                },
-                function (resp) {
-                    if (resp.authResponse) {
-                        console.log("Got auth back from login button.");
-                        displayAuthResult(resp.access_token);
-                    }
-                }
-            );
 
             /** Event Listeners */
             yam.on('all', function (eventname, msg) {
