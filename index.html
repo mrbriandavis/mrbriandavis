@@ -4,19 +4,13 @@
 <head>
     <title>Yammer Action Buttons</title>
     <meta property="og:url" content="" />
-    <!--<script src="yambuttonsplugin/assets/jquery-1.9.1.min.js"></script> -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <!-- <script data-app-id="gzXxrSg5hswZjN0WljUiQ" src="https://assets.yammer.com/assets/platform_embed.js"></script> -->
     <script data-app-id="kW8GTCFsG64mmk1HYUtA" src="https://assets.staging.yammer.com/assets/platform_js_sdk.js"></script>
-    <!--<script data-app-id="Ytw9qGxPbFXGJpFJ6g0i4w" src="https://assets.yammer.com/platform/yam.js"></script>-->
+    <script type="text/javascript" src="https://assets.staging.yammer.com/assets/platform_embed.js"></script>
 </head>
 
 <body>
     <div>
-        <!--<div id="login" style="width:200px;height:100px;"></div>-->
-        <!--<div id="yammer-like" style="width:200px;height:100px;"></div>
-          <div id="yammer-follow" style="width:200px;height:100px;"></div>-->
-        <script type="text/javascript" src="https://assets.staging.yammer.com/assets/platform_embed.js"></script>
         <button id="yammer-js-login-button">JS Login</button>
         <button id="yammer-user-button">Get Current User</button>
         <div id="embedded-follow"></div>
@@ -49,6 +43,31 @@
                 container: "#embedded-like",
                 action: "like"
             });
+
+            function toggleLoginStatus(loggedIn) {
+                if (loggedIn) {
+                    $('.not-logged-in').hide();
+                    $('.logged-in').show('slow');
+                } else {
+                    $('.not-logged-in').show('slow');
+                    $('.logged-in').hide();
+                }
+            }
+
+            function displayAuthResult(authResult) {
+                console.log("AuthResult", authResult); //print user information to the console
+
+                $('#yammer-login').innerHTML = 'Welcome to Yammer!';
+                toggleLoginStatus(true);
+
+                $('#authResult').html('Auth Result:<br/>');
+                for (var field in authResult) {
+                    $('#authResult').append(' ' + field + ': ' +
+                        authResult[field] + '<br/>');
+                }
+                $('#authOps').show('slow');
+
+            }
 
             function login() {
                 console.log("Trigger LoginStatus");
@@ -93,9 +112,43 @@
                     }
                 });
 
-            }
-            $('#yammer-js-login-button').click(login);
-            $('#yammer-user-button').click(getCurrentUser);
+                $(document).ready(function () {
+
+                    //toggleLoginStatus(false);
+
+                    if (typeof console.log !== 'function') {
+                        //fake it for sucky browser
+                        console.log = function () {};
+                        console.error = function () {};
+                    }
+
+                    $('#disconnect').click(logout);
+                    $('#yammer-js-login-button').click(login);
+                    $('#yammer-user-button').click(getCurrentUser);
+
+                    yam.connect.loginButton(
+                        // You can specify a network here:
+                        // {selector: "#yammer-login", network: "example.com"}
+                        {
+                            selector: "#yammer-login"
+                        },
+                        function (resp) {
+                            if (resp.authResponse) {
+                                console.log("Got auth back from login button.");
+                                displayAuthResult(resp.access_token);
+                            }
+                        }
+                    );
+
+                    /** Event Listeners */
+                    yam.on('all', function (eventname, msg) {
+                        console.log("========>>> yam.all =>", eventname, (new Date).getTime());
+                    });
+
+                    yam.on('error', function (e) {
+                        console.error("======>>> yam.error =>", e);
+                    });
+                });
         </script>
     </div>
 </body>
