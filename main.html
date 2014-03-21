@@ -3,7 +3,7 @@
 
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" data-app-id="YOUR_CLIENT_ID_HERE" src="https://assets.yammer.com/assets/platform_js_sdk.js"></script>
+    <script type="text/javascript" data-app-id="n6DJEZ4qXm4ltLrpLEHYcg" src="https://assets.yammer.com/assets/platform_js_sdk.js"></script>
 </head>
 
 <body>
@@ -37,6 +37,7 @@
         yam.config({
             debug: true
         });
+
 
         function logout() {
             yam.getLoginStatus(
@@ -165,6 +166,19 @@
             $('#yammer-js-login-button').click(login);
             $('#yammer-user-button').click(getCurrentUser);
             $('#yammer-group-button').click(getCurrentGroups);
+
+        yam.connect.loginButton(
+            // You can specify a network here:
+            // {selector: "#yammer-login", network: "example.com"}
+            {selector: "#yammer-login", network:"microsoft.com"},
+            function (resp) {
+              if (resp.authResponse) {
+                console.log("Got auth back from login button.");
+                displayAuthResult(resp.access_token);
+              }
+            }
+        );
+
 
         });
     </script>
