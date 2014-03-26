@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Yammer Action Buttons</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script data-app-id="n6DJEZ4qXm4ltLrpLEHYcg" src="https://assets.yammer.com/assets/platform_embed.js"></script>
+    <script data-app-id="n6DJEZ4qXm4ltLrpLEHYcg" src="https://assets.yammer.com/assets/platform_js_sdk.js"></script>
+  </head>
+  <body>
+      <div>
+          <div id="login" style="width:200px;height:100px;"></div>
+          <div id="embedded-feed" style="width:450px;height:767px;"></div>
+      </div>
+      <script>
+          $(document).ready(function () {
+            var request = function () {
+                yam.platform.request({
+                    url: 'https://api.yammer.com/api/v1/messages/following.json',
+                    method: 'GET',
+                    data: {
+                        'threaded': 'true',
+                        'limit': '25'
+                    },
+                    success: function (resp) {
+                        alert('success: ' + resp);
+                    },
+                    error: function (resp) {
+                        alert('error: ' + resp);
+                    }
+                });
+            }
+
+            yam.getLoginStatus(
+              function (response) {
+                  if (response.authResponse) {
+                      request();
+                  }
+                  else {
+                      yam.connect.loginButton('#login', function (response) {
+                          if (response.authResponse) {
+                              request();
+                          }
+                      });
+                  }
+              }
+            );
+
+            yam.connect.embedFeed({
+                container: '#embedded-feed',
+                network: ‘microsoft.com,
+                feedType: 'open-graph',
+                feedId: '',
+                config: {
+                    use_sso: false,
+                    header: true,
+                    footer: true,
+                    showOpenGraphPreview: false
+                },
+                objectProperties: {
+                    url: 'http://www.google.com',
+                    type: 'page'
+                }
+            });
+        });
+      </script>
+  </body>
+</html>
