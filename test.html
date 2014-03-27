@@ -11,8 +11,9 @@
           <div id="embedded-feed" style="width:450px;height:767px;"></div>
       </div>
       <script>
-          $(document).ready(function () {
-            var request = function () {
+
+      $("#submit").click(function () {
+var request = function () {
                 yam.platform.request({
                     url: 'messages/following.json',
                     method: 'GET',
@@ -27,6 +28,9 @@
                         console.log('error: ' + resp);
                     }
                 });
+});
+
+
             }
 
             yam.getLoginStatus(
@@ -62,5 +66,10 @@
             });
         });
       </script>
+      <form id="form1">
+<div id="spn_url">
+</div>
+    <input type="submit" value="submit" name="submit" id="submit"/>
+</form>
   </body>
 </html>
