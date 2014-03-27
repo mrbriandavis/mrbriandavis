@@ -13,7 +13,6 @@
       <script>
 
       $("#submit").click(function () {
-var request = function () {
                 yam.platform.request({
                     url: 'messages/following.json',
                     method: 'GET',
@@ -28,7 +27,7 @@ var request = function () {
                         console.log('error: ' + resp);
                     }
                   });
-              }
+              };
 
             yam.getLoginStatus(
               function (response) {
