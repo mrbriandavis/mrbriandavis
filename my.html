@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--[if IE 7 ]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="no-js ie9" lang="en"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Yammer Time</title>
+    <meta name="description" content="Description">
+    <meta name="keywords" content="MetaKeywords">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+    <div id="yammer-login">
+    </div>
+    <!-- /yammer-login -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script data-app-id="kW8GTCFsG64mmk1HYUtA" src="//assets.staging.yammer.com/assets/platform_js_sdk.js"></script>
+    <script>
+
+        (function (yam) {
+
+            "use strict";
+
+            var YammerTime = window.YammerTime = function () {
+
+                var self = this;
+                var url = "https://api.yammer.com/api/v1/";
+
+                self.init = function () {
+                    console.log("init");
+                    loginButton();
+                }
+
+                var loginButton = function () {
+
+                    yam.connect.loginButton({
+                        selector: "#yammer-login"
+                    },
+                    function (resp) {
+                        
+                        if (resp.authResponse) {
+
+                            console.log("Got auth back from login button.");
+                            getFeed();
+                        }
+                    });
+                }
+
+                var getFeed = function () {
+
+                    yam.platform.request({
+                        method: "GET",
+                        url: url "messages/my_feed.json",
+                        data: {
+                            "limit": 1,
+                            "threaded": true
+                        },
+                        success: function (data, status, xhr) {
+
+                            console.log("getFeed Success");
+                            console.log(data);
+                            console.log(status);
+                            console.log(xhr);
+                        },
+                        error: function (xhr, status, error) {
+
+                            console.log("getFeed Error");
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        }
+                    });
+                }
+            };
+        })(yam);
+
+        $(document).ready(function () {
+
+            var yammerTime = new YammerTime();
+            yammerTime.init();
+        });
+
+    </script>
+</body>
+</html>
