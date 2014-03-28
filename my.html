@@ -55,13 +55,14 @@
 
                 var getFeed = function () {
 
-                    yam.platform.request({
-                        method: "GET",
-                        url: "messages/my_feed.json",
-                        data: {
-                            "limit": 1,
-                            "threaded": true
-                        },
+                    yam.request({
+url: "users/2020670.json", 
+method: "PUT",
+data: {
+"work_telephone" : "3232",
+"job_title" : "test",
+"department" : "dedjklsjdks"
+},
                         success: function (data, status, xhr) {
 
                             console.log("getFeed Success");
