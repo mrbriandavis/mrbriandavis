@@ -95,34 +95,17 @@
         }
 
         function login() {
-            console.log("Trigger setAuthToken");
             yam.getLoginStatus(
-                function (response) {
-                    if (response.authResponse) {
-                        console.log("logged in", response);
-                        // {access_token: Object, user: Object, network: Object, authResponse: true, status: "connected"}
-                        var userAccessToken = JSON.stringify(response.access_token.token).replace(/"/g, "");
-                        // var userAccessToken = response.access_token.token;
-                        // var userAccessToken = response.access_token;
-                        yam.platform.setAuthToken({
-                                token: userAccessToken
-                            },
-                            function (response) {
-                                if (response.authResponse) {
-                                    console.log("Logged in and got code");
-                                } else {
-                                    console.error("setAuthToken failed", response);
-                                    // {status: "notConnected", access_token: "", perms: ""}
-                                    yam.getLoginStatus(function (response) {
-                                        console.log(response);
-                                        // {status: "notConnected", access_token: "", perms: ""}
-                                    });
-                                }
-                            }
-                        );
-                    }
-                }
-            );
+  function(response) {
+    if (response.authResponse) {
+      alert("logged in");
+        console.dir(response); //print user information to the console
+      }
+    else { //authResponse = false if the user is not logged in, or is logged in but hasn't authorized your app yet
+      alert("logged out");
+    }
+  }
+);
         };
 
         function logout() {
