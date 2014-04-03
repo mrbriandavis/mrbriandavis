@@ -55,31 +55,29 @@
 
                 var getFeed = function () {
 
-                    yam.request({
-url: "https://api.staging.yammer.com/api/v1/users/2020670.json", 
-method: "PUT",
-data: {
-"work_telephone" : "3232",
-"job_title" : "test",
-"department" : "dedjklsjdks"
-},
-                        success: function (data, status, xhr) {
+                        yam.request({
+                            url: "https://api.staging.yammer.com/api/v1/users/2020670.json", 
+                            method: "PUT",
+                            data: {
+                            "work_telephone" : "3232djaksjl",
+                            "job_title" : "testkjjlkkjjjklkj",
+                            "department_name" : "dedjklsjdks"},
+                            success: function (data, status, xhr) {
 
-                            console.log("getFeed Success");
-                            console.log(data);
-                            console.log(status);
-                            console.log(xhr);
-                        },
-                        error: function (xhr, status, error) {
+                                console.log("getFeed Success");
+                                console.log(data);
+                                console.log(status);
+                                console.log(xhr);
+                            },
+                            error: function (xhr, status, error) {
 
-                            console.log("getFeed Error");
-                            console.log(xhr);
-                            console.log(status);
-                            console.log(error);
-                        }
-                    });
-                }
-            };
+                                console.log("getFeed Error");
+                                console.log(xhr);
+                                console.log(status);
+                                console.log(error);
+                            }
+                        });
+                };
         })(yam);
 
         $(document).ready(function () {
