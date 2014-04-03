@@ -141,10 +141,10 @@
                                     console.log("Logged in and got code");
                                 } else {
                                     console.error("setAuthToken failed", response);
-                                    // {status: "notConnected", access_token: "", perms: ""} 
+                                    // {status: "notConnected", access_token: "", perms: ""}
                                     yam.getLoginStatus(function (response) {
                                         console.log(response);
-                                        // {status: "notConnected", access_token: "", perms: ""} 
+                                        // {status: "notConnected", access_token: "", perms: ""}
                                     });
                                 }
                             }
@@ -203,37 +203,6 @@
             <pre id="authResult"></pre>
         </div>
     </div>
-    <div id="embedded-follow"></div>
-    <div id="embedded-like"></div>
-    <div id="embedded-feed" style="height:400px;width:500px;"></div>
-    <script>
-        yam.connect.embedFeed({
-            container: '#embedded-feed',
-            feedType: 'open-graph',
-            feedId: '',
-            config: {
-                use_sso: false,
-                header: true,
-                footer: true,
-                showOpenGraphPreview: false
-
-            },
-            objectProperties: {
-                url: '',
-                type: 'page'
-            }
-        });
-
-        yam.connect.actionButton({
-            container: "#embedded-follow",
-            action: "follow"
-        });
-
-        yam.connect.actionButton({
-            container: "#embedded-like",
-            action: "like"
-        });
-    </script>
 
 </body>
 
