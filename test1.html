@@ -6,14 +6,14 @@
 <h1>Alex awesome page</h1>
 <div id="embedded-feed" style="height:1000px;width:500px;"></div>
 <script>
-yam.connect.embedFeed({
-container: "#embedded-feed",
-feedType: "open-graph",
-config: {
-promptText: "Comment on this customer"
-}
-
-});
+<div id="embedded-feed" style="height:800px;width:400px;"></div>
+<script src="https://assets.staging.yammer.com/assets/platform_embed.js"></script>
+<script> yam.connect.embedFeed({
+	container: "#embedded-feed",
+	network: "yammer-inc.com",
+	feedType: "group",
+	feedId: "2821006"});
+</script>
 </script>
 
 
