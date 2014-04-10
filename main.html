@@ -168,17 +168,7 @@
             $('#yammer-user-button').click(getCurrentUser);
             $('#yammer-group-button').click(getCurrentGroups);
 
-        yam.connect.loginButton(
-            // You can specify a network here:
-            // {selector: "#yammer-login", network: "example.com"}
-            {selector: "#yammer-login", network:"microsoft.com"},
-            function (resp) {
-              if (resp.authResponse) {
-                console.log("Got auth back from login button.");
-                displayAuthResult(resp.access_token);
-              }
-            }
-        );
+
 
 
         });
@@ -256,8 +246,6 @@
     <div id="embedded-follow"></div>
     <div id="embedded-like"></div>
     <div id="current-groups"></div>
-    <h2>Login Button</h2>
-      <span id="yammer-login"></span>
     <div id="embedded-feed" style="height:400px;width:500px;"></div>
     <script>
         yam.connect.embedFeed({
