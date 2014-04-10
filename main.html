@@ -133,7 +133,9 @@
                         localStorage.setItem(1, JSON.stringify(response.access_token.token).replace(/"/g, ""));
                     } else {
                         console.log("Not logged in.  Going to login now.");
-                        yam.login(function (response) { //prompt user to login and authorize your app, as necessary
+                        yam.platform.login(function (response) {
+                        network: "bammers",
+                         //prompt user to login and authorize your app, as necessary
                             if (response.authResponse) {
                                 displayAuthResult(response.access_token);
                                 localStorage.setItem(1, JSON.stringify(response.access_token.token).replace(/"/g, ""));
