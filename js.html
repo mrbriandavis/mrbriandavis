@@ -17,7 +17,8 @@
             method: "POST",
             data: {
               "body" : "This is a post via JS SDK!!!",
-              "topic1" : "TOPICS_NEVER_DIE"
+              "topic1" : "TOPICS_NEVER_DIE",
+              "broadcast": true 
             },
             success: function (user) { //print message response information to the console
                 console.log("Message request was successful.");
