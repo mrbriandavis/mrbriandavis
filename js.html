@@ -11,6 +11,30 @@
     if (response.authResponse) {
       alert("logged in");
         console.dir(response); //print user information to the console
+        yam.platform.request({
+            // yam.request({
+            url: "messages.json", //this is one of many REST endpoints that are available
+            method: "POST",
+            data: {
+              "body" : "This is a post via JS SDK!!!",
+              "topic1" : "TOPICS_NEVER_DIE"
+            },
+            success: function (user) { //print message response information to the console
+                console.log("Message request was successful.");
+                console.dir(message);
+                toggleLoginStatus(true);
+                $('#authResult').html('Message Result:<br/>');
+                for (var field in message) {
+                    $('#authResult').append(' ' + field + ': ' +
+                        escape(message[field]) + '<br/>');
+                }
+
+            },
+            error: function (user) {
+                console.error("There was an error with the request.");
+            }
+        });
+
       }
     else { //authResponse = false if the user is not logged in, or is logged in but hasn't authorized your app yet
       alert("logged out");
