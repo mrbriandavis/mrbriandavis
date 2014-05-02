@@ -14,6 +14,11 @@
       }
     else { //authResponse = false if the user is not logged in, or is logged in but hasn't authorized your app yet
       alert("logged out");
+       yam.platform.login(function (response) { //prompt user to login and authorize your app, as necessary
+        if (response.authResponse) {
+          console.dir(response); //print user information to the console
+        }
+      });
     }
   }
 );
