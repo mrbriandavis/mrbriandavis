@@ -1,17 +1,17 @@
-<script type="text/javascript" data-app-id="JjOWvmhbuSQfEDjian5JOQ" src="https://assets.staging.yammer.com/assets/platform_js_sdk.js"></script>
+<script type="text/javascript" data-app-id="Jj6bfqCVm5aZl7KcvMOmIQ" src="https://assets.staging.yammer.com/assets/platform_js_sdk.js"></script>
 <script>
 yam.getLoginStatus(function(response) {
   if (response.authResponse)
 	{
 		//GET THE TOKENS FOR ALL MY NETWORKS
 	   	yam.platform.request({
-			url: "https://www.staging.yammer.com/api/v1/oauth/tokens.json",
+			url: "oauth/tokens.json",
 			method: "GET",
 			success: function(msg) {
 				var access_token = "";
 				for (var i=0; i < msg.length; i++) {
 					//GRAB THE TOKEN FOR THE DESIRED NETWORK
-					if (msg[i].network_permalink == "TARGET_NETWORK_PERMALINK")
+					if (msg[i].network_permalink == "testnetwork12344")
 					{
 						console.log(msg[i].network_permalink)
 						access_token = msg[i].token;
@@ -21,7 +21,7 @@ yam.getLoginStatus(function(response) {
 
         //request messages for the target network
         yam.platform.request({
-					url: "https://www.staging.yammer.com/api/v1/messages.json",
+					url: "messages.json",
 					method: "GET",
 					beforeSend: function (req) {   //send the access_token in the HTTP header
 						req.headers.Authorization = "Bearer " + access_token;
@@ -42,12 +42,13 @@ yam.getLoginStatus(function(response) {
 	}
     else
     {
-		yam.platform.login(function(response) { 
-			if (response.authResponse)
-			{
-				console.log("you're logged in now, please reload the page");
-			}
-		});
+		yam.platform.login(function (response) {
+     //prompt user to login and authorize your app, as necessary
+        if (response.authResponse) {
+            displayAuthResult(response.access_token);
+            localStorage.setItem(1, JSON.stringify(response.access_token.token).replace(/"/g, ""));
+        }
+    });
 	}
 });
 </script>
