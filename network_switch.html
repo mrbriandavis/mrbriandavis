@@ -1,0 +1,53 @@
+<script type="text/javascript" data-app-id="JjOWvmhbuSQfEDjian5JOQ" src="https://assets.staging.yammer.com/assets/platform_js_sdk.js"></script>
+<script>
+yam.getLoginStatus(function(response) {
+  if (response.authResponse)
+	{
+		//GET THE TOKENS FOR ALL MY NETWORKS
+	   	yam.platform.request({
+			url: "https://www.staging.yammer.com/api/v1/oauth/tokens.json",
+			method: "GET",
+			success: function(msg) {
+				var access_token = "";
+				for (var i=0; i < msg.length; i++) {
+					//GRAB THE TOKEN FOR THE DESIRED NETWORK
+					if (msg[i].network_permalink == "TARGET_NETWORK_PERMALINK")
+					{
+						console.log(msg[i].network_permalink)
+						access_token = msg[i].token;
+						break;
+					}
+				};
+
+        //request messages for the target network
+        yam.platform.request({
+					url: "https://www.staging.yammer.com/api/v1/messages.json",
+					method: "GET",
+					beforeSend: function (req) {   //send the access_token in the HTTP header
+						req.headers.Authorization = "Bearer " + access_token;
+					},
+					success: function(msg) {
+						console.log(msg);
+					},
+					error: function(msg) {
+						console.log(msg);
+					}
+				});
+
+			},
+			error: function(msg) {
+				console.log(msg);
+			}
+		});
+	}
+    else
+    {
+		yam.platform.login(function(response) { 
+			if (response.authResponse)
+			{
+				console.log("you're logged in now, please reload the page");
+			}
+		});
+	}
+});
+</script>

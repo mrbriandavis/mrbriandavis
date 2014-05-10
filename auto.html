@@ -80,22 +80,21 @@
 
         function getRank() {
             yam.platform.request({
-                // yam.request({
                 url: "autocomplete/ranked?prefix=Brian&models=user:5", //this is one of many REST endpoints that are available
                 method: "GET",
                 data: {},
-                success: function (user) { //print message response information to the console
+                success: function (rank) { //print message response information to the console
                     console.log("User request was successful.");
                     console.dir(user);
                     toggleLoginStatus(true);
-                    $('#authResult').html('User Result:<br/>');
-                    for (var field in user) {
+                    $('#authResult').html('Autocomplete Result:<br/>');
+                    for (var field in rank) {
                         $('#authResult').append(' ' + field + ': ' +
-                            escape(user[field]) + '<br/>');
+                            escape(rank[field]) + '<br/>');
                     }
 
                 },
-                error: function (user) {
+                error: function (rank) {
                     console.error("There was an error with the request.");
                 }
             });
