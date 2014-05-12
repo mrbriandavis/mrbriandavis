@@ -84,21 +84,47 @@
                 url: "oauth/tokens.json", //this is one of many REST endpoints that are available
                 method: "GET",
                 data: {},
-                success: function (user) { //print message response information to the console
-                    console.log("User request was successful.");
-                    console.dir(user);
-                    toggleLoginStatus(true);
-                    $('#authResult').html('User Result:<br/>');
-                    for (var field in user) {
-                        $('#authResult').append(' ' + field + ': ' +
-                            escape(user[field]) + '<br/>');
+                success: function(msg) {
+                  var access_token = "";
+                  for (var i=0; i < msg.length; i++) {
+                    //GRAB THE TOKEN FOR THE DESIRED NETWORK
+                    if (msg[i].network_permalink == "Bammers")
+                    {
+                      console.log(msg[i].network_permalink)
+                      access_token = msg[i].token;
+                      break;
                     }
+                  };
+
+                  yam.platform.setAuthToken({
+                          token: access_token
+                      },
+                      function (response) {
+                          if (response.authResponse) {
+                              console.log("Logged in and got code");
+                              displayAuthResult(response.access_token);
+                          } else {
+                              console.log("Not logged in.");
+
+                          }
+                      });
+                  //request messages for the target network
+                  yam.platform.request({
+                    url: "messages.json",
+                    method: "GET",
+                    success: function(msg) {
+                      console.log(msg);
+                    },
+                    error: function(msg) {
+                      console.log(msg);
+                    }
+                  });
 
                 },
-                error: function (user) {
-                    console.error("There was an error with the request.");
+                error: function(msg) {
+                  console.log(msg);
                 }
-            });
+              });
 
         }
 
