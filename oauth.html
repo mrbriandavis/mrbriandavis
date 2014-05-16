@@ -81,42 +81,24 @@
         function getCurrentUser() {
             yam.platform.request({
                 // yam.request({
-                url: "oauth/tokens.json", //this is one of many REST endpoints that are available
+                url: "users/current.json", //this is one of many REST endpoints that are available
                 method: "GET",
                 data: {},
-                success: function(msg) {
-                  console.log(msg)
-                  };
-
-                  yam.platform.setAuthToken({
-                          token: access_token
-                      },
-                      function (response) {
-                          if (response.authResponse) {
-                              console.log("Logged in and got code");
-                              displayAuthResult(response.access_token);
-                          } else {
-                              console.log("Not logged in.");
-
-                          }
-                      });
-                  //request messages for the target network
-                  yam.platform.request({
-                    url: "messages.json",
-                    method: "GET",
-                    success: function(msg) {
-                      console.log(msg);
-                    },
-                    error: function(msg) {
-                      console.log(msg);
+                success: function (user) { //print message response information to the console
+                    console.log("User request was successful.");
+                    console.dir(user);
+                    toggleLoginStatus(true);
+                    $('#authResult').html('User Result:<br/>');
+                    for (var field in user) {
+                        $('#authResult').append(' ' + field + ': ' +
+                            escape(user[field]) + '<br/>');
                     }
-                  });
 
                 },
-                error: function(msg) {
-                  console.log(msg);
+                error: function (user) {
+                    console.error("There was an error with the request.");
                 }
-              });
+            });
 
         }
 
@@ -185,6 +167,10 @@
             $('#yammer-js-login-button').click(login);
             $('#yammer-user-button').click(getCurrentUser);
             $('#yammer-group-button').click(getCurrentGroups);
+
+
+
+
         });
     </script>
     <div id='page'>
@@ -206,6 +192,17 @@
         </div>
     </div>
     <span id="yammer-login"></span>
+<script> yam.connect.loginButton(
+            // You can specify a network here:
+            // {selector: "#yammer-login", network: "example.com"}
+            {selector: "#yammer-login" , network: "bammers" },
+            function (resp) {
+              if (resp.authResponse) {
+                console.log("Got auth back from login button.");
+                displayAuthResult(resp.access_token);
+              }
+            }
+        );</script>
     <pre><code>yam.platform.getLoginStatus(callback, [forceRefresh])
 </code></pre>
 
@@ -278,6 +275,7 @@
             action: "like"
         });
     </script>
+    <a href="/auth.html">Link to page with setAuthToken</a>
 </body>
 
 </html>
