@@ -185,10 +185,6 @@
             $('#yammer-js-login-button').click(login);
             $('#yammer-user-button').click(getCurrentUser);
             $('#yammer-group-button').click(getCurrentGroups);
-
-
-
-
         });
     </script>
     <div id='page'>
@@ -210,17 +206,6 @@
         </div>
     </div>
     <span id="yammer-login"></span>
-<script> yam.connect.loginButton(
-            // You can specify a network here:
-            // {selector: "#yammer-login", network: "example.com"}
-            {selector: "#yammer-login" , network: "bammers" },
-            function (resp) {
-              if (resp.authResponse) {
-                console.log("Got auth back from login button.");
-                displayAuthResult(resp.access_token);
-              }
-            }
-        );</script>
     <pre><code>yam.platform.getLoginStatus(callback, [forceRefresh])
 </code></pre>
 
@@ -293,7 +278,6 @@
             action: "like"
         });
     </script>
-    <a href="/auth.html">Link to page with setAuthToken</a>
 </body>
 
 </html>
