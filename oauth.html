@@ -81,14 +81,14 @@
         function getCurrentUser() {
             yam.platform.request({
                 // yam.request({
-                url: "users/current.json", //this is one of many REST endpoints that are available
+                url: "oauth/tokens.json", //this is one of many REST endpoints that are available
                 method: "GET",
                 data: {},
                 success: function (user) { //print message response information to the console
                     console.log("User request was successful.");
                     console.dir(user);
                     toggleLoginStatus(true);
-                    $('#authResult').html('User Result:<br/>');
+                    $('#authResult').html('Oauth Result:<br/>');
                     for (var field in user) {
                         $('#authResult').append(' ' + field + ': ' +
                             escape(user[field]) + '<br/>');
