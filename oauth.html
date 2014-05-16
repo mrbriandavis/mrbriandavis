@@ -3,7 +3,7 @@
 
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" data-app-id="Jj6bfqCVm5aZl7KcvMOmIQ" src="https://assets.staging.yammer.com/assets/platform_js_sdk.js"></script>
+    <script type="text/javascript" data-app-id="rUaQ4ntzsW9qyR7rr6zXw" src="https://assets.yammer.com/assets/platform_js_sdk.js"></script>
 </head>
 
 <body>
@@ -85,15 +85,7 @@
                 method: "GET",
                 data: {},
                 success: function(msg) {
-                  var access_token = "";
-                  for (var i=0; i < msg.length; i++) {
-                    //GRAB THE TOKEN FOR THE DESIRED NETWORK
-                    if (msg[i].network_permalink == "Bammers")
-                    {
-                      console.log(msg[i].network_permalink)
-                      access_token = msg[i].token;
-                      break;
-                    }
+                  console.log(msg)
                   };
 
                   yam.platform.setAuthToken({
