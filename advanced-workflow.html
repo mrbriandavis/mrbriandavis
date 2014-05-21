@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JS SDK SPEC</title>
+    <link href="css/pure-min.css" rel="stylesheet"></link>
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://www.staging.yammer.com/assets/platform_js_sdk.js" data-app-id="wu8nWryB0bGIzSkmQtWaXA"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/requests.js"></script>
+    <script type="text/javascript">
+      (function(suite) {
+        "use strict";
+        /* global $ */
+
+        function onAuthCheck2(result) {
+          if(result.status === 'connected') {
+            suite.log('user is connected');
+            suite.runTasks();
+          } else {
+            suite.log('Token failed to validate', true);
+          }
+        }
+
+        function onLogin1(result) {
+          if(result.status !== 'connected') {
+            suite.log('failed to log the user in', true);
+            return;
+          }
+          var token = result.access_token.token;
+          window.location = 'advanced-workflow.html?token=' + token;
+        }
+
+        function onAuthCheck1(result) {
+          if(result.status === 'connected') {
+            suite.log('Suite thinks the user is connected', true);
+            suite.log('Resetting auth token');
+            onLogin1(result);
+          } else {
+            suite.log('Logging user in');
+            yam.platform.login(onLogin1);
+          }
+        }
+
+        suite.ready(function() {
+          suite.log('Starting advanced workflow');
+          if(window.location.search.indexOf('token=') === -1) {
+            suite.log('No token provided, going to log in to get one');
+            yam.platform.getLoginStatus(onAuthCheck1);
+          } else {
+            var token = window.location.search.substr(window.location.search.indexOf('token=')+ 6);
+            suite.log('Token found (' + token + ')');
+            suite.log('setting auth token and validating it');
+            yam.platform.setAuthToken(token, onAuthCheck2);
+          }
+
+        });
+
+      })(window.suite);
+    </script>
+  </head>
+  <body>
+    <div id="output"></div>
+  </body>
+</html>

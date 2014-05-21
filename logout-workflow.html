@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JS SDK SPEC</title>
+    <link href="css/pure-min.css" rel="stylesheet"></link>
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://www.staging.yammer.com/assets/platform_js_sdk.js" data-app-id="wu8nWryB0bGIzSkmQtWaXA"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/requests.js"></script>
+    <script type="text/javascript">
+      (function(suite) {
+        "use strict";
+
+        function logoutCallback(result) {
+          if(result) {
+            suite.log("user logged out successfully");
+          } else {
+            suite.log("failed to log user out", true);
+          }
+        }
+
+        function onAuthCheck(result) {
+          if(result.status === 'connected') {
+            suite.log('user is connected, logging them out');
+            yam.platform.logout(logoutCallback);
+          } else {
+            suite.log('user is not connected');
+          }
+        }
+
+
+
+        suite.ready(function() {
+          suite.log('Doing the logout workflow');
+          yam.platform.getLoginStatus(onAuthCheck);
+        });
+
+      })(window.suite);
+    </script>
+  </head>
+  <body>
+    <div id="yammer-login"></div>
+    <div id="output"></div>
+  </body>
+</html>
