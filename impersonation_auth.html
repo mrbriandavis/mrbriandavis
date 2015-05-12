@@ -127,6 +127,7 @@
 
         });
     </script>
+
     <div id='page'>
         <div>
             <h2>JS SDK</h2>
@@ -134,6 +135,20 @@
             <button id="yammer-group-button">Get Current Groups</button>
 
         </div>
+        <div id="embedded-feed" style="height:400px;width:500px;"></div>
+    <script>
+    yam.connect.embedFeed({
+          "config": {
+            "use_sso": false,
+            "header": true,
+            "footer": true,
+            "showOpenGraphPreview": false,
+            "defaultToCanonical": false,
+            "hideNetworkName": false
+          },
+          "container": "#embedded-feed"
+        });
+        </script>
         <a name="setauthtoken" class="anchor" href="#setauthtoken"><span class="mini-icon mini-icon-link"></span></a>setAuthToken</h2>
 
 
