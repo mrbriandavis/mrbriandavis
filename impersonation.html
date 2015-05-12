@@ -107,19 +107,19 @@
                 url: "oauth.json?user_id=1488830331&consumer_key=SXKJsxc0BWJ2vx01DbzMg", //this is one of many REST endpoints that are available
                 method: "POST",
                 data: {},
-                success: function (user) { //print message response information to the console
+                success: function (response) { //print message response information to the console
                     console.log("User impersonation was successful.");
-                    console.dir(user);
+                    console.log(response.token)
                     toggleLoginStatus(true);
                     localStorage.setItem(1, JSON.stringify(response.token).replace(/"/g, ""));
                     $('#authResult').html('User Result:<br/>');
-                    for (var field in user) {
+                    for (var field in response) {
                         $('#authResult').append(' ' + field + ': ' +
-                            escape(user[field]) + '<br/>');
+                            escape(response[field]) + '<br/>');
                     }
 
                 },
-                error: function (user) {
+                error: function (response) {
                     console.error("There was an error with the request.");
                 }
             });
