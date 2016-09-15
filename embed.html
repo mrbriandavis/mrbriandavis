@@ -1,25 +1,31 @@
    <div id="embedded-follow"></div>
     <div id="embedded-like"></div>
     <div id="current-groups"></div>
-    <script type="text/javascript" src="https://assets.staging.yammer.com/assets/platform_embed.js"></script>
+    <script type="text/javascript" src="https://assets.yammer.com/assets/platform_embed.js"></script>
     <div id="embedded-feed" style="height:400px;width:500px;"></div>
 
     <script>
         yam.connect.embedFeed({
-            container: '#embedded-feed',
-            feedType: 'open-graph',
-            feedId: '',
-            config: {
-                use_sso: false,
-                header: true,
-                footer: true,
-                showOpenGraphPreview: false
-
-            },
-            objectProperties: {
-                url: '',
-                type: 'page'
-            }
+          "feedType": "open-graph",
+          "config": {
+            "use_sso": false,
+            "header": true,
+            "footer": true,
+            "showOpenGraphPreview": true,
+            "promptText": "Comment on this poll",
+            "defaultGroupId": 1054049,
+            "defaultToCanonical": false,
+            "hideNetworkName": false
+          },
+          "objectProperties": {
+            "title": "Vote for my Poll!!",
+            "url": "https://www.sched.do/events/d3498a49",
+            "type": "page",
+            "fetch": true,
+            "private": false,
+            "ignore_canonical_url": false
+          },
+          "container": "#embedded-feed"
         });
 
         yam.connect.actionButton({
